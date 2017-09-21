@@ -31,6 +31,14 @@
     from BM_USER
     where ID = #{id,jdbcType=VARCHAR}
   </select>
+ 
+  <select id="queryUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BM_USER
+    where USER_NAME = #{username,jdbcType=VARCHAR}
+  </select>
+ 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     <!--
       WARNING - @mbggenerated

@@ -15,7 +15,7 @@
     <!-- 启用springMVC注解 -->
     <context:annotation-config />
     
-    <context:component-scan base-package="com.bohai.employeeSalary.controller"/>
+    <context:component-scan base-package="com.barManager.controller"/>
     
     <!-- 读入配置属性文件 -->
     <!-- <context:property-placeholder location="classpath:service.properties" /> -->
@@ -52,14 +52,8 @@
 	    </property>
 	</bean>
 	
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor" />
-    
-    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-        <property name="securityManager" ref="securityManager"/>
-    </bean>
-    
 	<!-- 异常处理类 -->
-	<bean class="com.bohai.employeeSalary.controller.exception.BohaiExceptionResolver">
+	<bean class="com.barManager.controller.exception.BohaiExceptionResolver">
 	</bean>
 	
 </beans>

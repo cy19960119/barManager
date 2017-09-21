@@ -211,7 +211,7 @@
   
   </dependencies>
   <build>
-    <finalName>EmployeeSalary</finalName>
+    <finalName>barManager</finalName>
       <plugins>  
           <plugin>  
               <groupId>org.apache.maven.plugins</groupId>  

@@ -50,4 +50,6 @@ public interface BmUserMapper {
      * @mbggenerated Wed Sep 20 15:37:49 CST 2017
      */
     int updateByPrimaryKey(BmUser record);
+
+	BmUser queryUserByUsername(String username);
 }
