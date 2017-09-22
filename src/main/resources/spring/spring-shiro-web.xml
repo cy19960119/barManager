@@ -39,6 +39,7 @@
                 /login.jsp = authc
                 #静态资源不拦截
                 /resources/** = anon
+                /assets/** = anon
                 # some example chain definitions:
                 /admin/** = authc, roles[admin]
                 /docs/** = authc, perms[document:read]
