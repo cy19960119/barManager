@@ -155,4 +155,10 @@
       PRODUCT_COUNT = #{productCount,jdbcType=VARCHAR}
     where PRODUCT_ID = #{productId,jdbcType=VARCHAR}
   </update>
+  <select id="queryBmProducts" parameterType="java.util.Map" resultMap="BaseResultMap">
+  SELECT
+  <include refid="Base_Colum_List"/>
+  FROM BM_PRODUCTS
+  ORDER BY PRODUCT_ID
+  </select>
 </mapper>

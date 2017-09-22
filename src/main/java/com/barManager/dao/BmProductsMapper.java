@@ -1,6 +1,7 @@
 package com.barManager.dao;
 
 import com.barManager.entity.BmProducts;
+import com.sun.tools.javac.util.List;
 
 public interface BmProductsMapper {
     /**
@@ -50,4 +51,10 @@ public interface BmProductsMapper {
      * @mbggenerated Wed Sep 20 15:40:26 CST 2017
      */
     int updateByPrimaryKey(BmProducts record);
+
+    /**
+     * 查询所有商品信息
+     * @author chenyang
+     * */
+	List<BmProducts> queryBmProducts(Object object);
 }
