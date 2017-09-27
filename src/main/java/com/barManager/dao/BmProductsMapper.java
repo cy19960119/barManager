@@ -1,7 +1,8 @@
 package com.barManager.dao;
 
+import java.util.List;
+
 import com.barManager.entity.BmProducts;
-import com.sun.tools.javac.util.List;
 
 public interface BmProductsMapper {
     /**

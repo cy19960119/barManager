@@ -1,8 +1,8 @@
 package com.barManager.controller.exception;
 
 /**
- * 渤海期货异常类
- * @author caojia
+ * 异常类
+ *
  */
 public class BohaiException extends Exception {
 

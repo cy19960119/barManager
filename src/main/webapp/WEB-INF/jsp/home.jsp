@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,6 +18,14 @@
     <link href="resources/css/dashboard.css" rel="stylesheet">
     <link href="resources/css/sticky-footer.css" rel="stylesheet">   
     <link href="resources/favicon.ico" rel="shortcut icon"/>
+    <!-- fileInput -->
+    <link href="resources/fileInput/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="resources/fileInput/js/plugins/canvas-to-blob.min.js"></script>
+    <script type="text/javascript" src="resources/fileInput/js/plugins/sortable.min.js"></script>
+    <script type="text/javascript" src="resources/fileInput/js/plugins/purify.min.js"></script>
+    <script type="text/javascript" src="resources/fileInput/js/fileinput.min.js"></script>
+    <script type="text/javascript" src="resources/fileInput/themes/fa/theme.js"></script>
+    <script type="text/javascript" src="resources/fileInput/js/locales/zh.js"></script>
     <!-- datepicker -->
     <link href="resources/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet">
     <!-- table -->    
@@ -71,61 +83,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="sub-header"><a href="toStaffInfo" style="text-decoration: none;">商品信息管理</a></h1>
 
-      <div class="row placeholders">
-            
-            <!-- 查询条件表单 -->
-                      <form id="queryForm" method="post" action="exportCustomer" enctype="application/json;charset=UTF-8" class="form-horizontal" style="margin-top: 30px">
-                          <div class="form-group">  
-                                <label for="depName" class="col-sm-2 col-md-1 control-label">归属部门</label>
-                                <div class="col-sm-10 col-md-2">
-                                  <select class="selectpicker form-control" id="depName" data-live-Search="true" name="depname">
-                                    </select>
-                                </div>
-
-                                <label for="staffNumber" class="col-sm-2 col-md-1 control-label">员工编号</label>
-                                <div class="col-sm-10 col-md-2">
-                                  <input type="text" class="form-control" id="staffNumber" name="investorName">
-                                </div>
-                                <label for="name" class="col-sm-2 col-md-1 control-label">员工姓名</label>
-                                <div class="col-sm-10 col-md-2">
-                                  <input type="text" class="form-control" id="name" name="investorName">
-                                </div>
-                                
-                          </div>
-                          <div class="form-group">
-                                <label for="isProbation" class="col-sm-2 col-md-1 control-label">员工类型</label>
-                                <div class="col-sm-10 col-md-2">
-                                  <select class="selectpicker form-control" id="isProbation">
-                      	   	 			<option value=""> </option>
-                          				<option value="0">正式员工</option>
-                          				<option value="1">试用期员工</option>
-                          				<option value="2">其他类型</option>
-                      				</select>
-                                </div>
-                                
-                                <label for="isLeave" class="col-sm-2 col-md-1 control-label">员工状态</label>
-                                <div class="col-sm-10 col-md-2">
-                                 <select class="selectpicker form-control" id="isLeave">
-                      	   	 			<option value=""> </option>
-                          				<option value="0">在职</option>
-                          				<option value="1">离职</option>
-                      				</select>
-                                </div>
-                                
-                          </div>
-                          
-                          <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10 col-md-2 col-md-offset-4 ">
-                              <input class="btn btn-default col-xs-7" type="button" value="查询" onclick="queryByCondition()">
-                            </div>
-                           <!-- <div class=" col-sm-10 col-md-2 ">
-                              <input class="btn btn-default col-xs-7" type="button" value="导出" onclick="exportStaffInfo()">
-                            </div> --> 
-                          </div>
-                      </form>
-                      <!-- 查询条件表单结束 -->
-          </div>
-
+      
 
 <div class="panel-group" id="panel-642522">
 			<h2 class="sub-header"></h2>
@@ -155,13 +113,13 @@
                 <tr>
                     <!-- <th data-field="state" data-checkbox="true"></th> -->
                     <th data-field="productId" data-align="center" >商品编号</th>
-                    <th data-field="productPicture" data-align="center" >商品图片</th>
+                    <th data-field="productPicture" data-align="center" data-formatter="pictureFormatter">商品图片</th>
                     <th data-field="productName" data-align="center">商品名称</th>
-                    <th data-field="productPrice" data-align="center" >商品价格</th>
-                    <th data-field="productCount" data-align="center">商品数量</th>
-                    <th data-field="productType" data-align="center" data-formatter="LeaveFormatter">商品归属类</th>
+                    <th data-field="productPrice" data-align="center" >商品价格(／瓶)</th>
+                    <th data-field="productCount" data-align="center">商品数量(／瓶)</th>
+                    <th data-field="productType" data-align="center" data-formatter="typeFormatter">商品归属类</th>
                     <th data-field="productDescribe" data-align="center">商品描述</th>
-                    <th data-field="" data-formatter="operationFormatter">操作</th>
+                    <th data-field="" data-formatter="operationFormatter">修改商品信息</th>
                 </tr>
                 </thead>
             </table>
@@ -182,310 +140,299 @@
     </footer>
 
 
-<!-- 新增员工 -->
+<!-- 新增商品信息 -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">新增员工</h4>
+            <h4 class="modal-title" id="myModalLabel">新增商品</h4>
           </div>
           <div class="modal-body">
-              <form class="form-horizontal" role="form">
+              <form  class="form-horizontal" role="form" method="post">
                   
                   <div class="form-group">
-                    <label for="staffNumber1" class="col-sm-3 control-label">员工编号</label>
+                    <label for="productId1" class="col-sm-3 control-label">商品编号</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="staffNumber1" placeholder="">
-                    </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
+                      <input type="text" class="form-control" id="productId1" placeholder="">
                     </div>
                   </div>
-                  
+                
                   <div class="form-group">
-                    <label for="name1" class="col-sm-3 control-label">员工姓名</label>
+                    <label for="productPicture1" class="col-sm-3 control-label">商品图片</label>
                     <div class="col-sm-8">
-                            <input type="text" class="form-control" id="name1" placeholder="">
-                    </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
+                            <input type="file" class="file" id="productPicture1" multiple> 
+                    </div>                  
                   </div>
-                  
                   
                 
                   <div class="form-group">
-                    <label for="depName1" class="col-sm-3 control-label">所属部门</label>
+                    <label for="productName1" class="col-sm-3 control-label">商品名称</label>
                     <div class="col-sm-8">
-                     <select class="selectpicker form-control" id="depName1" data-live-Search="true" name="depname">
-                         <!-- <option value="0">A部</option>
-                          <option value="1">B部</option>
-                          <option value="2">C部</option>
-                          <option value="3">D部</option>
-                          <option value="4">E部</option> --> 
-                      </select>
-                    </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label for="positionSalary1" class="col-sm-3 control-label">岗位工资</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="positionSalary1" placeholder="">         
-                    </div>
-                    <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="skillSalary1" class="col-sm-3 control-label">技能工资</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="skillSalary1" placeholder="">         
-                    </div> 
-                  </div>
-                  
-                   <div class="form-group">
-                    <label for="workYears1" class="col-sm-3 control-label">司龄工资</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="workYears1" placeholder="">
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label for="probationDateStart1" class="col-sm-3 control-label">试用期起始日期</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="probationDateStart1" placeholder="">
-                    </div>
-                  </div>
-                  
-                   <div class="form-group">
-                    <label for="formalDateStart1" class="col-sm-3 control-label">转正日期</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="formalDateStart1" placeholder="">
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label for="isProbation1" class="col-sm-3 control-label">员工属性</label>
-                    <div class="col-sm-8">
-                     <select class="selectpicker form-control" id="isProbation1" onchange="changeCoefficeient1()">
-                          <option value=""> </option>
-                          <option value="0">正式员工</option>
-                          <option value="1">试用期员工</option>
-                          <option value="2">其他类型</option>
-                      </select>
-                    </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
-                  </div>
-                 
-                  <div class="form-group">
-                    <label for="coefficeient1" class="col-sm-3 control-label">工资系数</label>
-                    <div class="col-sm-8">
-                       <input type="text" class="form-control" id="coefficeient1"  placeholder="">          
-                    </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
-                  </div>
-                  <hr>
- 
-                  <div class="form-group">
-                    <label for="email1" class="col-sm-3 control-label">电子邮箱</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="email1" placeholder="">
-                    </div>
-                  </div>
-                  
-               
-                  <div class="form-group">
-                    <label for="remark1" class="col-sm-3 control-label">备注</label>
-                    <div class="col-sm-8">
-                      <textarea class="form-control" rows="3" id="remark1"></textarea>
-                    </div>
-                  </div>            
-                </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" onclick="checkData()">提交审核</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- 修改员工信息 -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">修改员工信息</h4>
-          </div>
-          <div class="modal-body">
-              <form class="form-horizontal" role="form">
-                  
-                  <div class="form-group">
-                    <label for="staffNumber2" class="col-sm-3 control-label">员工编号</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="staffNumber2" placeholder=""  disabled>
-                    </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="name2" class="col-sm-3 control-label">员工姓名</label>
-                    <div class="col-sm-8">
-                            <input type="text" class="form-control" id="name2" placeholder="">
-                    </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
-                  </div>
-                  
-                  
-                
-                  <div class="form-group">
-                    <label for="depName2" class="col-sm-3 control-label">所属部门</label>
-                    <div class="col-sm-8">
-                     <select class="selectpicker form-control" id="depName2" data-live-Search="true" name="depname">
-                         <!-- <option value="0">A部</option>
-                          <option value="1">B部</option>
-                          <option value="2">C部</option>
-                          <option value="3">D部</option>
-                          <option value="4">E部</option> --> 
-                      </select>
-                    </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label for="positionSalary2" class="col-sm-3 control-label">岗位工资</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="positionSalary2" placeholder="">         
-                    </div>
-                    <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="skillSalary2" class="col-sm-3 control-label">技能工资</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="skillSalary2" placeholder="">         
-                    </div>
-                  </div>
-                  
-                   <div class="form-group">
-                    <label for="workYears2" class="col-sm-3 control-label">司龄工资</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="workYears2" placeholder="">
-                    </div> 
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label for="probationDateStart2" class="col-sm-3 control-label">试用期起始日期</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="probationDateStart2" placeholder="">
-                    </div>
-                  </div>
-                  
-                   <div class="form-group">
-                    <label for="formalDateStart2" class="col-sm-3 control-label">转正日期</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="formalDateStart2" placeholder="">
-                    </div>
-                  </div>
-                  
-                  <hr>
-                  
-                  <div class="form-group">
-                    <label for="isProbation2" class="col-sm-3 control-label">员工属性</label>
-                    <div class="col-sm-8">
-                     <select class="selectpicker form-control" id="isProbation2" onchange="changeCoefficeient2()">
-                          <option value=""> </option>
-                          <option value="0">正式员工</option>
-                          <option value="1">试用期员工</option>
-                          <option value="2">其他类型</option>
-                      </select>
-                    </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
-                  </div>
-                 
-                  <div class="form-group">
-                    <label for="coefficeient2" class="col-sm-3 control-label">工资系数</label>
-                    <div class="col-sm-8">
-                       <input type="text" class="form-control" id="coefficeient2"  placeholder="">          
-                    </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
-                  </div>
-				<hr>
-                   <div class="form-group">
-                    <label for="isLeave2" class="col-sm-3 control-label">员工状态</label>
-                    <div class="col-sm-8">
-                     <select class="selectpicker form-control" id="isLeave2">
-                          <option value=""> </option>
-                          <option value="0">在职</option>
-                          <option value="1">离职</option>
-                      </select>
-                    </div>
-                 </div>
-                  
-                   <div class="form-group">
-                    <label for="leaveDate2" class="col-sm-3 control-label">离职日期</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="leaveDate2" placeholder="">
-                    </div>
-                  </div>
-                  <hr>
- 
-                  <div class="form-group">
-                    <label for="email2" class="col-sm-3 control-label">电子邮箱</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="email2" placeholder="">
+                      <input type="text" class="form-control" id="productName1" placeholder="">
                     </div>
                    
                   </div>
                   
-               
+                  <hr>
+                  
                   <div class="form-group">
-                    <label for="remark2" class="col-sm-3 control-label">备注</label>
+                    <label for="productPrice1" class="col-sm-3 control-label">商品价格</label>
                     <div class="col-sm-8">
-                      <textarea class="form-control" rows="3" id="remark2"></textarea>
+                      <input type="text" class="form-control" id="productPrice1" placeholder="">         
                     </div>
-                  </div>            
-                </form>
-          </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="productCount1" class="col-sm-3 control-label">商品数量</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="productCount1" placeholder="">         
+                    </div> 
+                  </div>
+                  
+                   <div class="form-group">
+                    <label for="productType1" class="col-sm-3 control-label">商品归属类</label>
+                    <div class="col-sm-8">
+                     <select class="selectpicker form-control" id="productType1">
+                      	<option value=""></option>
+                      	<option value="0">威士忌</option>
+                      	<option value="1">伏特加</option>
+                      	<option value="2">力娇酒</option>
+                      	<option value="3">龙舌兰</option>
+                      	<option value="4">啤酒</option>
+                      	<option value="5">红酒</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="form-group">
+                    <label for="productDescribe1" class="col-sm-3 control-label">商品描述</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" rows="3" id="productDescribe1"></textarea></div>
+                  </div>
+                
+          
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" onclick="checkData2()">提交审核</button>
+            <button type="button" class="btn btn-primary" onclick="saveProductInfo()">提交</button>
           </div>
+      	 </form>
+       	</div>
         </div>
       </div>
     </div>
+    
+    <!-- 修改商品信息 -->
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">修改商品信息</h4>
+          </div>
+          <div class="modal-body">
+              <form  class="form-horizontal" role="form" method="post">
+                  
+                  <div class="form-group">
+                    <label for="productId2" class="col-sm-3 control-label">商品编号</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="productId2" placeholder="">
+                    </div>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="productPicture2" class="col-sm-3 control-label">商品图片</label>
+                    <div class="col-sm-8">
+                    		<img id="productPicture2" src="" width="100" height="100">
+                           <input type="file" class="file" id="productPicture3" multiple> 
+                    </div>                  
+                  </div>
+                  
+                
+                  <div class="form-group">
+                    <label for="productName2" class="col-sm-3 control-label">商品名称</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="productName2" placeholder="">
+                    </div>
+                   
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="form-group">
+                    <label for="productPrice2" class="col-sm-3 control-label">商品价格</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="productPrice2" placeholder="">         
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="productCount2" class="col-sm-3 control-label">商品数量</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="productCount2" placeholder="">         
+                    </div> 
+                  </div>
+                  
+                   <div class="form-group">
+                    <label for="productType2" class="col-sm-3 control-label">商品归属类</label>
+                    <div class="col-sm-8">
+                      <select class="selectpicker form-control" id="productType2">
+                      	<option value=""></option>
+                      	<option value="0">威士忌</option>
+                      	<option value="1">伏特加</option>
+                      	<option value="2">力娇酒</option>
+                      	<option value="3">龙舌兰</option>
+                      	<option value="4">啤酒</option>
+                      	<option value="5">红酒</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="form-group">
+                    <label for="productDescribe2" class="col-sm-3 control-label">商品描述</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" rows="3" id="productDescribe2"></textarea></div>
+                  </div>
+                
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" onclick="alterProductInfo()">提交</button>
+          </div>
+      	 </form>
+       	</div>
+        </div>
+      </div>
+    </div>
+    
+ <script type="text/javascript">
+               var picture;
+                	 $("#productPicture1").fileinput({
+                		 	 uploadUrl:"uploadFile",
+                         uploadAsync:true, //默认异步上传
+                         showUpload: true, //是否显示上传按钮,跟随文本框的那个
+                         showRemove : true, //显示移除按钮,跟随文本框的那个
+                         showCaption: true,//是否显示标题,就是那个文本框
+                         showPreview : true, //是否显示预览,不写默认为true
+                         dropZoneEnabled: false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+
+                          maxFileCount: 1, //表示允许同时上传的最大文件个数
+                          enctype: 'multipart/form-data',
+                          validateInitialCount:false,
+                          previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                          msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+                          allowedFileTypes: ['image'],//配置允许文件上传的类型
+                          allowedPreviewTypes : [ 'image' ],//配置所有的被预览文件类型
+                          allowedPreviewMimeTypes : [ 'jpg', 'png', 'gif' ],//控制被预览的所有mime类型
+                          language : 'zh'
+                     });
+                     $("#productPicture1").on("fileuploaded",function(event,data,previewId,index){
+                    	 		console.log(data);
+                    	 		picture=data.response.picturepath;
+                    	 		console.log(picture);
+                     });
+                	 
+                	 
+                	 /**
+                	  * 添加商品信息
+                	  * @author chenyang
+                	  * */
+                	  function saveProductInfo(){
+                	      var param = {
+                	      		productId:$('#productId1').val(),
+                	      		productName:$('#productName1').val(),
+                	      		productType:$('#productType1').val(),
+                	      		productPicture:picture,
+                	      		productPrice:$('#productPrice1').val(),
+                	      		productCount:$('#productCount1').val(),
+                	      		productDescribe:$('#productDescribe1').val()
+                	              }
+                	       $.ajax({
+                	           url: 'saveProductInfo',
+                	           type: 'post',
+                	           contentType: "application/json;charset=UTF-8",
+                	           data: JSON.stringify(param),
+                	           success: function (data,status) {
+                	               $('#addModal').modal('hide');
+                	               $('#bmProductsTable').bootstrapTable('refresh');
+                	           }
+                	      });
+                	  }
+                	 
+                	 
+                	 
+                	 
+                	  var picture1;
+                	   	 $("#productPicture3").fileinput({
+                	   		 	 uploadUrl:"uploadFile",
+                	            uploadAsync:true, //默认异步上传
+                	            showUpload: true, //是否显示上传按钮,跟随文本框的那个
+                	            showRemove : true, //显示移除按钮,跟随文本框的那个
+                	            showCaption: true,//是否显示标题,就是那个文本框
+                	            showPreview : true, //是否显示预览,不写默认为true
+                	            dropZoneEnabled: false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+
+                	             maxFileCount: 1, //表示允许同时上传的最大文件个数
+                	             enctype: 'multipart/form-data',
+                	             validateInitialCount:false,
+                	             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                	             msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+                	             allowedFileTypes: ['image'],//配置允许文件上传的类型
+                	             allowedPreviewTypes : [ 'image' ],//配置所有的被预览文件类型
+                	             allowedPreviewMimeTypes : [ 'jpg', 'png', 'gif' ],//控制被预览的所有mime类型
+                	             language : 'zh'
+                	        });
+                	        $("#productPicture3").on("fileuploaded",function(event,data,previewId,index){
+                	       	 		console.log(data);
+                	       	 		picture1=data.response.picturepath;
+                	       	 		console.log(picture);
+                	        });
+                	   	 
+                	        /**
+                	         * 修改商品信息
+                	         * */
+                	      	function alterProductInfo(){
+                	        		if(picture1==null){
+                	      		var param={
+                	      			productId:$('#productId2').val(),
+                	      			productPicture:$('#productPicture2').val(),
+                	      			productName:$('#productName2').val(),
+                	      			productPrice:$('#productPrice2').val(),
+                	      			productCount:$('#productCount2').val(),
+                	      			productType:$('#productType2').val(),
+                	      			productDescribe:$('#productDescribe2').val()
+                	      		}
+                	        		}else{
+                	        			var param={
+                            	      			productId:$('#productId2').val(),
+                            	      			productPicture:picture1,
+                            	      			productName:$('#productName2').val(),
+                            	      			productPrice:$('#productPrice2').val(),
+                            	      			productCount:$('#productCount2').val(),
+                            	      			productType:$('#productType2').val(),
+                            	      			productDescribe:$('#productDescribe2').val()
+                            	      		}
+                	        		}
+                	      		$.ajax({
+                	      			url:'alterProductInfo',
+                	      			type:'post',
+                	      			contentType:"application/json;charset=UTF-8",
+                	      			data:JSON.stringify(param),
+                	      			success:function(data,status){
+                	      				$('#editModal').modal('hide');
+                	      				alert("修改成功");
+                	      				$("#bmProductsTable").bootstrapTable('refresh');
+                	      			}
+                	      		})
+                	      	}
+                	        
+                	        
+                    
+</script>    
     
 </body>
 </html>

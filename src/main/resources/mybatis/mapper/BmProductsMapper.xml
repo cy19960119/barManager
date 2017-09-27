@@ -157,7 +157,7 @@
   </update>
   <select id="queryBmProducts" parameterType="java.util.Map" resultMap="BaseResultMap">
   SELECT
-  <include refid="Base_Colum_List"/>
+  <include refid="Base_Column_List"/>
   FROM BM_PRODUCTS
   ORDER BY PRODUCT_ID
   </select>

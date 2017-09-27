@@ -1,8 +1,10 @@
 package com.barManager.service;
 
+import java.util.List;
+
 import com.barManager.entity.BmProducts;
 import com.barManager.vo.PaginationParamVO;
-import com.sun.tools.javac.util.List;
+
 
 public interface BmProductsService {
 

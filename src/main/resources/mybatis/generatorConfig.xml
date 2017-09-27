@@ -6,16 +6,17 @@
 <generatorConfiguration>
   <!-- 驱动物理路径 -->
   <!-- mysql -->
-  <!-- <classPathEntry location="D:\develop\apache-maven-3.3.9\mvnRepo\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" /> -->
+  <classPathEntry location="C:\Users\BHQH\.m2\repository\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" /> 
   
   <!-- oracle -->  
-  <classPathEntry location="C:\Users\BHQH\.m2\repository\com\oracle\ojdbc6\11.2.0\ojdbc6-11.2.0.jar" />
+  <!--  <classPathEntry location="C:\Users\BHQH\.m2\repository\com\oracle\ojdbc6\11.2.0\ojdbc6-11.2.0.jar" />
+  -->
   <context id="MysqlTables" targetRuntime="MyBatis3">
     <!-- oracle -->
-    <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
-        connectionURL="jdbc:oracle:thin:@localhost:1521:orcl"
-        userId="cybm"
-        password="cybm">
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://localhost:3306/cmby"
+        userId="root"
+        password="root">
     </jdbcConnection>
 
     <javaTypeResolver >
