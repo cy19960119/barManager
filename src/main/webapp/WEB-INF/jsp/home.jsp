@@ -26,9 +26,7 @@
     <script type="text/javascript" src="resources/fileInput/js/fileinput.min.js"></script>
     <script type="text/javascript" src="resources/fileInput/themes/fa/theme.js"></script>
     <script type="text/javascript" src="resources/fileInput/js/locales/zh.js"></script>
-    <!-- datepicker -->
-    <link href="resources/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet">
-    <!-- table -->    
+   <!-- table -->    
     <link rel="stylesheet" href="resources/bootstrap-table/bootstrap-table.css">
     
     <script type="text/javascript" src="resources/tree/bootstrap-treeview.min.js"></script>
@@ -40,12 +38,12 @@
     <!-- bootstrap-select -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
-    
-    
-    <!-- datepicker -->
-    <script src="resources/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
-   
+
+	<!-- uedtior -->
+    <script type="text/javascript" src="resources/utf8-jsp/ueditor.config.js"></script>
+	<script type="text/javascript" src="resources/utf8-jsp/ueditor.all.min.js"></script>
+	<script type="text/javascript" src="resources/utf8-jsp/lang/zh-cn/zh-cn.js"></script>
+	
     <script type="text/javascript" src="resources/js/home.js"></script>
   
 </head>
@@ -142,7 +140,7 @@
 
 <!-- 新增商品信息 -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog " style="width:1000px">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -193,7 +191,7 @@
                    <div class="form-group">
                     <label for="productType1" class="col-sm-3 control-label">商品归属类</label>
                     <div class="col-sm-8">
-                     <select class="selectpicker form-control" id="productType1">
+                     <select class="selectpicker dropup form-control" id="productType1" data-dropup-auto="false">
                       	<option value=""></option>
                       	<option value="0">威士忌</option>
                       	<option value="1">伏特加</option>
@@ -205,18 +203,54 @@
                     </div>
                   </div>
                   
-                  <hr>
+                 
                   
                   <div class="form-group">
                     <label for="productDescribe1" class="col-sm-3 control-label">商品描述</label>
-                    <div class="col-sm-8">
-                        <textarea class="form-control" rows="3" id="productDescribe1"></textarea></div>
+                    <div class="col-sm-8">                 
+                       <!-- 加载编辑器的容器 -->
+   				  <script id="productDescribe1" name="content" type="text/plain"></script>
+   					 
+     				<!-- 实例化编辑器 -->
+   				   <script type="text/javascript">
+        				
+        				var ue = UE.getEditor('productDescribe1', {
+        					toolbars: [
+        				        [ 'fullscreen', 'source', 'undo', 'redo',
+        				            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 
+        				            'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote',
+        				            'pasteplain', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 
+        				            'selectall', 'cleardoc',
+        				            'rowspacingtop', 'rowspacingbottom', 'lineheight',
+        				            'customstyle', 'paragraph', 'fontfamily', 'fontsize', 
+        				            'directionalityltr', 'directionalityrtl', 'indent',
+        				            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify',  'touppercase', 'tolowercase',
+        				            'link', 'unlink', 'anchor',  'imagenone', 'imageleft', 'imageright', 'imagecenter',
+        				            'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music',
+        				            'attachment', 'map', 'gmap', 'insertframe', 
+        				            'template', 'background',
+        				            'horizontal', 'date', 'time', 'spechars',
+        				            'print', 'preview', 'searchreplace', 'drafts']
+        				    ],
+        					elementPathEnabled: false, //删除元素路径
+        			        wordCount: false,    //删除字数统计
+        			        
+        			    });
+        			ue.ready(function () {
+
+        			        // 删除 路径一行
+        			        $(".edui-editor-bottomContainer").remove();
+        			    });
+   					 </script>
+   					 
                   </div>
-                
+          </div>      
           
           <div class="modal-footer">
+          <div class="col-sm-8">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             <button type="button" class="btn btn-primary" onclick="saveProductInfo()">提交</button>
+          </div>
           </div>
       	 </form>
        	</div>
@@ -335,13 +369,13 @@
                     	 		picture=data.response.picturepath;
                     	 		console.log(picture);
                      });
-                	 
-                	 
+                
+                
                 	 /**
                 	  * 添加商品信息
                 	  * @author chenyang
                 	  * */
-                	  function saveProductInfo(){
+                	  function saveProductInfo(){    
                 	      var param = {
                 	      		productId:$('#productId1').val(),
                 	      		productName:$('#productName1').val(),
