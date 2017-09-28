@@ -41,7 +41,7 @@
 
 	<!-- uedtior -->
     <script type="text/javascript" src="resources/utf8-jsp/ueditor.config.js"></script>
-	<script type="text/javascript" src="resources/utf8-jsp/ueditor.all.min.js"></script>
+	<script type="text/javascript" src="resources/utf8-jsp/ueditor.all.js"></script>
 	<script type="text/javascript" src="resources/utf8-jsp/lang/zh-cn/zh-cn.js"></script>
 	
     <script type="text/javascript" src="resources/js/home.js"></script>
@@ -209,8 +209,7 @@
                     <label for="productDescribe1" class="col-sm-3 control-label">商品描述</label>
                     <div class="col-sm-8">                 
                        <!-- 加载编辑器的容器 -->
-   				  <script id="productDescribe1" name="content" type="text/plain"></script>
-   					 
+                       <textarea id="productDescribe1" row="3">aaaaaa</textarea>
      				<!-- 实例化编辑器 -->
    				   <script type="text/javascript">
         				
@@ -235,12 +234,7 @@
         					elementPathEnabled: false, //删除元素路径
         			        wordCount: false,    //删除字数统计
         			        
-        			    });
-        			ue.ready(function () {
-
-        			        // 删除 路径一行
-        			        $(".edui-editor-bottomContainer").remove();
-        			    });
+        			    });			
    					 </script>
    					 
                   </div>
@@ -369,13 +363,20 @@
                     	 		picture=data.response.picturepath;
                     	 		console.log(picture);
                      });
-                
-                
+                     
+                     
                 	 /**
                 	  * 添加商品信息
                 	  * @author chenyang
                 	  * */
-                	  function saveProductInfo(){    
+                	  function saveProductInfo(){  
+                		  var content = UE.getEditor('productDescribe1')
+                           .getContent()
+                           .replace(/\[b\]([^\[]*?)\[\/b\]/igm, '<b>$1</b>')
+                           .replace(/\[i\]([^\[]*?)\[\/i\]/igm, '<i>$1</i>')
+                           .replace(/\[u\]([^\[]*?)\[\/u\]/igm, '<u>$1</u>')
+                           .replace(/\[url=([^\]]*)\]([^\[]*?)\[\/url\]/igm, '<a href="$1">$2</a>')
+                           .replace(/\[img\]([^\[]*?)\[\/img\]/igm, '<img src="$1" />');
                 	      var param = {
                 	      		productId:$('#productId1').val(),
                 	      		productName:$('#productName1').val(),
@@ -383,7 +384,7 @@
                 	      		productPicture:picture,
                 	      		productPrice:$('#productPrice1').val(),
                 	      		productCount:$('#productCount1').val(),
-                	      		productDescribe:$('#productDescribe1').val()
+                	      		productDescribe:content
                 	              }
                 	       $.ajax({
                 	           url: 'saveProductInfo',
