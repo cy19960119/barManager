@@ -225,7 +225,7 @@
         				            'directionalityltr', 'directionalityrtl', 'indent',
         				            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify',  'touppercase', 'tolowercase',
         				            'link', 'unlink', 'anchor',  'imagenone', 'imageleft', 'imageright', 'imagecenter',
-        				            'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music',
+        				            'simpleupload', 'emotion', 'scrawl', 'insertvideo', 'music',
         				            'attachment', 'map', 'gmap', 'insertframe', 
         				            'template', 'background',
         				            'horizontal', 'date', 'time', 'spechars',
@@ -322,8 +322,36 @@
                   
                   <div class="form-group">
                     <label for="productDescribe2" class="col-sm-3 control-label">商品描述</label>
-                    <div class="col-sm-8">
-                        <textarea class="form-control" rows="3" id="productDescribe2"></textarea></div>
+                   <div class="col-sm-8">                 
+                       <!-- 加载编辑器的容器 -->
+                       <textarea id="productDescribe2" row="3">aaaaaa</textarea>
+     				<!-- 实例化编辑器 -->
+   				   <script type="text/javascript">
+        				
+        				var ue = UE.getEditor('productDescribe2', {
+        					toolbars: [
+        				        [ 'fullscreen', 'source', 'undo', 'redo',
+        				            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 
+        				            'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote',
+        				            'pasteplain', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 
+        				            'selectall', 'cleardoc',
+        				            'rowspacingtop', 'rowspacingbottom', 'lineheight',
+        				            'customstyle', 'paragraph', 'fontfamily', 'fontsize', 
+        				            'directionalityltr', 'directionalityrtl', 'indent',
+        				            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify',  'touppercase', 'tolowercase',
+        				            'link', 'unlink', 'anchor',  'imagenone', 'imageleft', 'imageright', 'imagecenter',
+        				            'simpleupload', 'emotion', 'scrawl', 'insertvideo', 'music',
+        				            'attachment', 'map', 'gmap', 'insertframe', 
+        				            'template', 'background',
+        				            'horizontal', 'date', 'time', 'spechars',
+        				            'print', 'preview', 'searchreplace', 'drafts']
+        				    ],
+        					elementPathEnabled: false, //删除元素路径
+        			        wordCount: false,    //删除字数统计
+        			        
+        			    });			
+   					 </script>
+   					 
                   </div>
                 
           
@@ -431,6 +459,13 @@
                 	         * 修改商品信息
                 	         * */
                 	      	function alterProductInfo(){
+                	      		var changeContent = UE.getEditor('productDescribe2')
+                                .getContent()
+                                .replace(/\[b\]([^\[]*?)\[\/b\]/igm, '<b>$1</b>')
+                                .replace(/\[i\]([^\[]*?)\[\/i\]/igm, '<i>$1</i>')
+                                .replace(/\[u\]([^\[]*?)\[\/u\]/igm, '<u>$1</u>')
+                                .replace(/\[url=([^\]]*)\]([^\[]*?)\[\/url\]/igm, '<a href="$1">$2</a>')
+                                .replace(/\[img\]([^\[]*?)\[\/img\]/igm, '<img src="$1" />');
                 	        		if(picture1==null){
                 	      		var param={
                 	      			productId:$('#productId2').val(),
@@ -439,7 +474,7 @@
                 	      			productPrice:$('#productPrice2').val(),
                 	      			productCount:$('#productCount2').val(),
                 	      			productType:$('#productType2').val(),
-                	      			productDescribe:$('#productDescribe2').val()
+                	      			productDescribe:changeContent
                 	      		}
                 	        		}else{
                 	        			var param={
@@ -449,7 +484,7 @@
                             	      			productPrice:$('#productPrice2').val(),
                             	      			productCount:$('#productCount2').val(),
                             	      			productType:$('#productType2').val(),
-                            	      			productDescribe:$('#productDescribe2').val()
+                            	      			productDescribe:changeContent
                             	      		}
                 	        		}
                 	      		$.ajax({
