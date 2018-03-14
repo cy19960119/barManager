@@ -21,26 +21,6 @@ $(function(){
    
 /*------------------------------------------------------------------------------------------------*/ 
   /**
-   * 商品类型
-   * */
-  function typeFormatter(vaule,row,index){
-  	var result=row.productType;
-  	if(result=="0"){
-  		result="威士忌";
-  	}else if(result=="1"){
-  		result="伏特加";
-  	}else if(result=="2"){
-  		result="力娇酒";
-  	}else if(result=="3"){
-  		result="龙舌兰";
-  	}else if(result=="4"){
-  		result="啤酒";
-  	}else if(result=="5"){
-  		result="红酒";
-  	}
-  	return result;
-  }
-  /**
    * 图片路径截取
    * */
   function pictureFormatter(value,row,index){
@@ -113,33 +93,4 @@ $(function(){
 	}
 /*---------------------------------------------------------------------------------------------*/	
   
-  
-  
- /*-------------------------------------------------------------------------------*/  
-  
- /**
- *定义的方法事件
- */
- 
- //按条件查询
-  function  queryByCondition(){
-  	$('#staffInfoTable').bootstrapTable('refresh',{
-  		url:"queryByCondition",
-  					query:{
-  						departmentId:$('#depName').val(),
-  						staffNumber:$('#staffNumber').val(),
-  						name:$('#name').val(),
-  						isProbation:$('#isProbation').val(),
-  						isLeave:$('#isLeave').val()
-  					}
-  				}
-  		);
-  }
 
- 
-  
-  
- 
-  
- 
-/*------------------------------------------------------------------------------------------*/   

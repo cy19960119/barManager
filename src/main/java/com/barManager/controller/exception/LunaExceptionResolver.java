@@ -12,7 +12,7 @@ import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
  * @author caojia
  *
  */
-public class BohaiExceptionResolver extends SimpleMappingExceptionResolver{
+public class LunaExceptionResolver extends SimpleMappingExceptionResolver{
     
     @Override
     public ModelAndView doResolveException(HttpServletRequest request,

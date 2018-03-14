@@ -16,7 +16,9 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
+import com.barManager.dao.BmAdminMapper;
 import com.barManager.dao.BmUserMapper;
+import com.barManager.entity.BmAdmin;
 import com.barManager.entity.BmUser;
 
 public class UserRealm extends AuthorizingRealm {
@@ -25,7 +27,7 @@ public class UserRealm extends AuthorizingRealm {
     
 
     @Autowired
-    private BmUserMapper bmUserMapper;
+    private BmAdminMapper bmAdminMapper;
 //登录认证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
@@ -34,18 +36,17 @@ public class UserRealm extends AuthorizingRealm {
         String username = (String) token.getPrincipal();
 //        String password = new String((char[])token.getCredentials());
         
-        BmUser bmUser = this.bmUserMapper.queryUserByUsername(username);
+        BmAdmin bmAdmin = this.bmAdminMapper.queryAdminByUsername(username);
         
-        if(bmUser == null){
+        if(bmAdmin == null){
             logger.warn("无此用户信息,用户名："+username);
             throw new UnknownAccountException("无此用户信息,用户名："+username);
         }
         
         logger.info("token: "+JSON.toJSONString(token));
         Subject currentUser = SecurityUtils.getSubject();
-        currentUser.getSession().setAttribute("user", bmUser);
-        return new SimpleAuthenticationInfo(username, bmUser.getPassWord(),getName());
-//        return new SimpleAuthenticationInfo(username, password, getName());
+        currentUser.getSession().setAttribute("user", bmAdmin);
+        return new SimpleAuthenticationInfo(username, bmAdmin.getPassWord(),getName());
         
     }
 

@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.barManager.controller.exception.BohaiException;
+import com.barManager.controller.exception.LunaException;
 
 /**
  * 上传文件接口
@@ -18,5 +18,5 @@ public interface FileUploadService {
 	 * @param request 
 	 * @return
 	 * */
-	public String upload(MultipartFile file, HttpServletRequest request)throws BohaiException;
+	public String upload(MultipartFile file, HttpServletRequest request)throws LunaException;
 }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.barManager.controller.exception.BohaiException;
+import com.barManager.controller.exception.LunaException;
 import com.barManager.dao.BmProductsMapper;
 import com.barManager.entity.BmProducts;
 import com.barManager.service.BmProductsService;
@@ -55,22 +55,22 @@ public class BmProductController {
 	/**
 	 * 新增商品信息
 	 * @author chenyang
-	 * @throws BohaiException 
+	 * @throws LunaException 
 	 * */
 	@RequestMapping(value="saveProductInfo")
 	@ResponseBody
-	public void saveProductInfo(@RequestBody(required = true) BmProducts param) throws BohaiException {  
+	public void saveProductInfo(@RequestBody(required = true) BmProducts param) throws LunaException {  
 		bmProductsMapper.insert(param);
 	}
 	
 	/**
 	 * 上传图片
 	 * @author chenyang
-	 * @throws BohaiException 
+	 * @throws LunaException 
 	 * */
 	@RequestMapping(value="uploadFile")
 	@ResponseBody
-	public Map<String,String> uploadFile(@RequestParam("file_data")MultipartFile file, HttpServletRequest request) throws BohaiException {
+	public Map<String,String> uploadFile(@RequestParam("file_data")MultipartFile file, HttpServletRequest request) throws LunaException {
 		String picturePath=this.productPictureUploadService.upload(file, request);
 		Map<String,String> map=new HashMap<String,String>();
 		map.put("picturepath",picturePath);
@@ -83,7 +83,7 @@ public class BmProductController {
 	 * */
 	@RequestMapping(value="alterProductInfo")
 	@ResponseBody
-	public void alterProductInfo(@RequestBody(required=true) BmProducts product)throws BohaiException{
+	public void alterProductInfo(@RequestBody(required=true) BmProducts product)throws LunaException{
 		this.bmProductsMapper.updateByPrimaryKey(product);
 	}
 }

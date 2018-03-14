@@ -4,7 +4,7 @@ package com.barManager.controller.exception;
  * 异常类
  *
  */
-public class BohaiException extends Exception {
+public class LunaException extends Exception {
 
 	/**
 	 * 
@@ -13,7 +13,7 @@ public class BohaiException extends Exception {
 
 	private String errorCode;
 	
-	public BohaiException(String errorCode, String errorMsg){
+	public LunaException(String errorCode, String errorMsg){
 		super(errorMsg);
 		this.errorCode = errorCode;
 	}

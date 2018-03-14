@@ -53,7 +53,7 @@
 	</bean>
 	
 	<!-- 异常处理类 -->
-	<bean class="com.barManager.controller.exception.BohaiExceptionResolver">
+	<bean class="com.barManager.controller.exception.LunaExceptionResolver">
 	</bean>
 	
 </beans>

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.barManager.controller.exception.BohaiException;
+import com.barManager.controller.exception.LunaException;
 import com.barManager.service.FileUploadService;
 
 @Service("productPictureUploadService")
@@ -17,7 +17,7 @@ public class productPictureUploadService implements FileUploadService{
 	
 	
 	@Override
-	public String upload(MultipartFile file, HttpServletRequest request) throws BohaiException {
+	public String upload(MultipartFile file, HttpServletRequest request) throws LunaException {
 		// TODO Auto-generated method stub
 		System.out.println("开始");
 		String path=request.getSession().getServletContext().getRealPath("upload");

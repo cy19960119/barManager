@@ -69,7 +69,7 @@
         <transactionManager type="JDBC"/>
         <dataSource type="POOLED">
           <property name="driver" value="com.mysql.jdbc.Driver"/>
-          <property name="url" value="jdbc:mysql://localhost:3306/cmby"/>
+          <property name="url" value="jdbc:mysql://localhost:3306/bar"/>
           <property name="username" value="${username}"/>
           <property name="password" value="${username}"/>
         </dataSource>
@@ -81,6 +81,8 @@
      <mapper resource="mybatis/mapper/BmOrderMapper.xml"/>
        <mapper resource="mybatis/mapper/BmProductsMapper.xml"/>
        <mapper resource="mybatis/mapper/BmUserMapper.xml"/>
+       <mapper resource="mybatis/mapper/BmAdminMapper.xml"/>
+       <mapper resource="mybatis/mapper/BmCarouselMapper.xml"/>
     </mappers>
 
 
