@@ -44,7 +44,7 @@
 	<script type="text/javascript" src="resources/utf8-jsp/ueditor.all.js"></script>
 	<script type="text/javascript" src="resources/utf8-jsp/lang/zh-cn/zh-cn.js"></script>
 	
-    <script type="text/javascript" src="resources/js/carousel.js"></script>
+    <script type="text/javascript" src="resources/js/productstype.js"></script>
   
 </head>
 <body>
@@ -79,7 +79,7 @@
             
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="sub-header"><a href="toStaffInfo" style="text-decoration: none;">轮播图管理</a></h1>
+          <h1 class="sub-header"><a href="toStaffInfo" style="text-decoration: none;">商品类别管理</a></h1>
 
       
 
@@ -87,11 +87,11 @@
 			<h2 class="sub-header"></h2>
            <div class="table-responsive">
             <div id="toolbar" class="btn-group">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#uploadModal" title="创建任务">
-                    <i class="glyphicon glyphicon-plus">上传</i>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addModal" title="创建任务">
+                    <i class="glyphicon glyphicon-plus">新增</i>
                 </button>
             </div>
-            <table id="bmCarouselsTable"
+            <table id="bmProductsTypeTable"
                    class="table table-striped"
                    data-toggle="table" 
                    data-toolbar="#toolbar"
@@ -102,22 +102,24 @@
                    data-detail-view="false"
                    data-detail-formatter="detailFormatter"
                    data-height="562"
-                   data-url="queryBmCarousels"
+                   data-url="queryBmProductsType"
                    data-pagination="true"
                    data-method="post"
                    data-page-list="[5, 10, 20, 50]"
                    data-search="true">
                 <thead>
-                <tr>
+                   <tr>
                     <!-- <th data-field="state" data-checkbox="true"></th> -->
-                    <th data-field="id" data-align="center" >轮播图编号</th>
-                    <th data-field="carouselPath" data-align="center" data-formatter="pictureFormatter">轮播图</th>
-                    <th data-field="type" data-align="center">状态</th>
-                    <th data-field="" data-formatter="operationFormatter">修改轮播图信息</th>
+                    <th data-field="id" data-align="center" >编号</th>
+                    <th data-field="carouselPath" data-align="center" data-formatter="pictureFormatter">图</th>
+                    <th data-field="type" data-align="center">名字</th>
+                    <th data-field="" data-formatter="operationFormatter">备注信息</th>
                 </tr>
                 </thead>
             </table>
-          </div>   
+          </div>  
+		 
+		  
 		  </div>
 		  
         </div>
@@ -131,85 +133,82 @@
       </div>
     </footer>
   
-    <!-- 添加轮转图信息 -->
-  <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- 修改商品信息 -->
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">添加轮转图信息</h4>
+            <h4 class="modal-title" id="myModalLabel">修改商品信息</h4>
           </div>
           <div class="modal-body">
               <form  class="form-horizontal" role="form" method="post">
-               
+                  
                   <div class="form-group">
-                    <label for="carouselPath1" class="col-sm-3 control-label">商品图片</label>
+                    <label for="productId2" class="col-sm-3 control-label">商品编号</label>
                     <div class="col-sm-8">
-                           <input type="file" class="file" id="carouselPath1" multiple> 
+                      <input type="text" class="form-control" id="productId2" placeholder="">
+                    </div>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="productPicture2" class="col-sm-3 control-label">商品图片</label>
+                    <div class="col-sm-8">
+                    		<img id="productPicture2" src="" width="100" height="100">
+                           <input type="file" class="file" id="productPicture3" multiple> 
                     </div>                  
                   </div>
-
+                  
+                
+                  <div class="form-group">
+                    <label for="productName2" class="col-sm-3 control-label">商品名称</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="productName2" placeholder="">
+                    </div>
+                   
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="form-group">
+                    <label for="productPrice2" class="col-sm-3 control-label">商品价格</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="productPrice2" placeholder="">         
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="productCount2" class="col-sm-3 control-label">商品数量</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="productCount2" placeholder="">         
+                    </div> 
+                  </div>
+                  
+                   <div class="form-group">
+                    <label for="productType2" class="col-sm-3 control-label">商品归属类</label>
+                    <div class="col-sm-8">
+                      <select class="selectpicker form-control" id="productType2">
+                      	<option value=""></option>
+                      	<option value="0">威士忌</option>
+                      	<option value="1">伏特加</option>
+                      	<option value="2">力娇酒</option>
+                      	<option value="3">龙舌兰</option>
+                      	<option value="4">啤酒</option>
+                      	<option value="5">红酒</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <hr>    
+          
           <div class="modal-footer">
-           <div class="col-sm-8">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" onclick="saveCarouselInfo()">提交</button>
-         	</div>
+            <button type="button" class="btn btn-primary" onclick="alterProductInfo()">提交</button>
           </div>
       	 </form>
        	</div>
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-var picture;
- 	 $("#carouselPath1").fileinput({
- 		 	 uploadUrl:"uploadFile",
-          uploadAsync:true, //默认异步上传
-          showUpload: true, //是否显示上传按钮,跟随文本框的那个
-          showRemove : true, //显示移除按钮,跟随文本框的那个
-          showCaption: true,//是否显示标题,就是那个文本框
-          showPreview : true, //是否显示预览,不写默认为true
-          dropZoneEnabled: false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
-
-           maxFileCount: 1, //表示允许同时上传的最大文件个数
-           enctype: 'multipart/form-data',
-           validateInitialCount:false,
-           previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-           msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-           allowedFileTypes: ['image'],//配置允许文件上传的类型
-           allowedPreviewTypes : [ 'image' ],//配置所有的被预览文件类型
-           allowedPreviewMimeTypes : [ 'jpg', 'png', 'gif' ],//控制被预览的所有mime类型
-           language : 'zh'
-      });
-      $("#carouselPath1").on("fileuploaded",function(event,data,previewId,index){
-     	 		console.log(data);
-     	 		picture=data.response.picturepath;
-     	 		console.log(picture);
-      });
-      
-      
- 	 /**
- 	  * 添加信息
- 	  * @author chenyang
- 	  * */
- 	  function saveCarouselInfo(){  
- 	      var param = { 
- 	      		carouselPath:picture,
- 	      		type:"0"
- 	              }
- 	       $.ajax({
- 	           url: 'saveCarouselInfo',
- 	           type: 'post',
- 	           contentType: "application/json;charset=UTF-8",
- 	           data: JSON.stringify(param),
- 	           success: function (data,status) {
- 	               $('#uploadModal').modal('hide');
- 	               $('#bmCarouselsTable').bootstrapTable('refresh');
- 	           }
- 	      });
- 	  }
- 	 
- 	 
-</script>
 </body>
 </html>

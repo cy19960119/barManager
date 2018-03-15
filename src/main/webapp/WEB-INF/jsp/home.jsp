@@ -150,9 +150,9 @@
               <form  class="form-horizontal" role="form" method="post">
                   
                   <div class="form-group">
-                    <label for="productId1" class="col-sm-3 control-label">商品编号</label>
+                    <label for="productName1" class="col-sm-3 control-label">商品名称</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="productId1" placeholder="">
+                      <input type="text" class="form-control" id="productName1" placeholder="">
                     </div>
                   </div>
                 
@@ -161,16 +161,7 @@
                     <div class="col-sm-8">
                             <input type="file" class="file" id="productPicture1" multiple> 
                     </div>                  
-                  </div>
-                  
-                
-                  <div class="form-group">
-                    <label for="productName1" class="col-sm-3 control-label">商品名称</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="productName1" placeholder="">
-                    </div>
-                   
-                  </div>
+                  </div>    
                   
                   <hr>
                   
@@ -188,58 +179,22 @@
                     </div> 
                   </div>
                   
-                   <div class="form-group">
-                    <label for="productType1" class="col-sm-3 control-label">商品归属类</label>
+                 <div class="form-group">
+                    <label for="productTypeid1" class="col-sm-3 control-label">商品归属类</label>
                     <div class="col-sm-8">
-                     <select class="selectpicker dropup form-control" id="productType1" data-dropup-auto="false">
+                     <select class="selectpicker dropup form-control" id="productTypeid1" data-dropup-auto="false">
                       	<option value=""></option>
-                      	<option value="0">威士忌</option>
-                      	<option value="1">伏特加</option>
-                      	<option value="2">力娇酒</option>
-                      	<option value="3">龙舌兰</option>
-                      	<option value="4">啤酒</option>
-                      	<option value="5">红酒</option>
+                      	<option value="1">啤酒</option>
+                      	<option value="2">洋酒</option>
+                      	<option value="3">鸡尾酒</option>
+                      	<option value="4">酒桶</option>
+                      	<option value="5">软饮</option>
+                      	<option value="6">小吃</option>
                       </select>
                     </div>
                   </div>
                   
                  
-                  
-                  <div class="form-group">
-                    <label for="productDescribe1" class="col-sm-3 control-label">商品描述</label>
-                    <div class="col-sm-8">                 
-                       <!-- 加载编辑器的容器 -->
-                       <textarea id="productDescribe1" row="3">aaaaaa</textarea>
-     				<!-- 实例化编辑器 -->
-   				   <script type="text/javascript">
-        				
-        				var ue = UE.getEditor('productDescribe1', {
-        					toolbars: [
-        				        [ 'fullscreen', 'source', 'undo', 'redo',
-        				            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 
-        				            'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote',
-        				            'pasteplain', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 
-        				            'selectall', 'cleardoc',
-        				            'rowspacingtop', 'rowspacingbottom', 'lineheight',
-        				            'customstyle', 'paragraph', 'fontfamily', 'fontsize', 
-        				            'directionalityltr', 'directionalityrtl', 'indent',
-        				            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify',  'touppercase', 'tolowercase',
-        				            'link', 'unlink', 'anchor',  'imagenone', 'imageleft', 'imageright', 'imagecenter',
-        				            'simpleupload', 'emotion', 'scrawl', 'insertvideo', 'music',
-        				            'attachment', 'map', 'gmap', 'insertframe', 
-        				            'template', 'background',
-        				            'horizontal', 'date', 'time', 'spechars',
-        				            'print', 'preview', 'searchreplace', 'drafts']
-        				    ],
-        					elementPathEnabled: false, //删除元素路径
-        			        wordCount: false,    //删除字数统计
-        			        
-        			    });			
-   					 </script>
-   					 
-                  </div>
-          </div>      
-          
           <div class="modal-footer">
           <div class="col-sm-8">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -320,41 +275,7 @@
                   
                   <hr>
                   
-                  <div class="form-group">
-                    <label for="productDescribe2" class="col-sm-3 control-label">商品描述</label>
-                   <div class="col-sm-8">                 
-                       <!-- 加载编辑器的容器 -->
-                       <textarea id="productDescribe2" row="3">aaaaaa</textarea>
-     				<!-- 实例化编辑器 -->
-   				   <script type="text/javascript">
-        				
-        				var ue = UE.getEditor('productDescribe2', {
-        					toolbars: [
-        				        [ 'fullscreen', 'source', 'undo', 'redo',
-        				            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 
-        				            'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote',
-        				            'pasteplain', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 
-        				            'selectall', 'cleardoc',
-        				            'rowspacingtop', 'rowspacingbottom', 'lineheight',
-        				            'customstyle', 'paragraph', 'fontfamily', 'fontsize', 
-        				            'directionalityltr', 'directionalityrtl', 'indent',
-        				            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify',  'touppercase', 'tolowercase',
-        				            'link', 'unlink', 'anchor',  'imagenone', 'imageleft', 'imageright', 'imagecenter',
-        				            'simpleupload', 'emotion', 'scrawl', 'insertvideo', 'music',
-        				            'attachment', 'map', 'gmap', 'insertframe', 
-        				            'template', 'background',
-        				            'horizontal', 'date', 'time', 'spechars',
-        				            'print', 'preview', 'searchreplace', 'drafts']
-        				    ],
-        					elementPathEnabled: false, //删除元素路径
-        			        wordCount: false,    //删除字数统计
-        			        
-        			    });			
-   					 </script>
-   					 
-                  </div>
-                
-          
+         <div class="form-group">
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             <button type="button" class="btn btn-primary" onclick="alterProductInfo()">提交</button>
@@ -398,21 +319,20 @@
                 	  * @author chenyang
                 	  * */
                 	  function saveProductInfo(){  
-                		  var content = UE.getEditor('productDescribe1')
+                		  /* var content = UE.getEditor('productDescribe1')
                            .getContent()
                            .replace(/\[b\]([^\[]*?)\[\/b\]/igm, '<b>$1</b>')
                            .replace(/\[i\]([^\[]*?)\[\/i\]/igm, '<i>$1</i>')
                            .replace(/\[u\]([^\[]*?)\[\/u\]/igm, '<u>$1</u>')
                            .replace(/\[url=([^\]]*)\]([^\[]*?)\[\/url\]/igm, '<a href="$1">$2</a>')
-                           .replace(/\[img\]([^\[]*?)\[\/img\]/igm, '<img src="$1" />');
+                           .replace(/\[img\]([^\[]*?)\[\/img\]/igm, '<img src="$1" />'); */
                 	      var param = {
-                	      		productId:$('#productId1').val(),
                 	      		productName:$('#productName1').val(),
-                	      		productType:$('#productType1').val(),
+                	      		productTypeid:$('#productTypeid1').val(),
                 	      		productPicture:picture,
                 	      		productPrice:$('#productPrice1').val(),
                 	      		productCount:$('#productCount1').val(),
-                	      		productDescribe:content
+                	      		productDescribe:"beer"
                 	              }
                 	       $.ajax({
                 	           url: 'saveProductInfo',

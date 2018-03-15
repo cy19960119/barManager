@@ -37,7 +37,7 @@
     </javaClientGenerator>
 
     
-    <table schema="" tableName="BM_CAROUSEL" domainObjectName="BmCarousel"
+    <table schema="" tableName="BM_PRODUCTS" domainObjectName="BmProducts"
         enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
         enableUpdateByExample="false" selectByExampleQueryId="false">
     </table>

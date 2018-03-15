@@ -83,7 +83,8 @@
        <mapper resource="mybatis/mapper/BmUserMapper.xml"/>
        <mapper resource="mybatis/mapper/BmAdminMapper.xml"/>
        <mapper resource="mybatis/mapper/BmCarouselMapper.xml"/>
-    </mappers>
-
+       <mapper resource="mybatis/mapper/BmProductsTypeMapper.xml"/>
+       <mapper resource="mybatis/mapper/BmOrderMapper.xml"/>
+	</mappers>
 
 </configuration>

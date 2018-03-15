@@ -8,7 +8,7 @@ $(function(){
 	    	           {"href":"toHome","selectable":false,"showCheckbox":false,"text":"商品信息管理"},
 	    	           {"href":"toProductsType","selectable":false,"showCheckbox":false,"text":"商品类别管理"},
 	    	           {"href":"toCheck","selectable":false,"showCheckbox":false,"text":"订单信息管理"},
-	    	           {"href":"toCarousel","selectable":false,"showCheckbox":false,"text":"轮播图管理"}]
+	    	           {"href":"toCarousel","selectable":false,"showCheckbox":false,"text":"轮播图管理"},]
 	   	$('#tree').treeview({data: treeObj,enableLinks: true});
     	
 	 

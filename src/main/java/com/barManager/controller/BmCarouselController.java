@@ -29,7 +29,7 @@ public class BmCarouselController {
 	private BmCarouselsService bmCarouselsService;
 	
 	 @RequestMapping(value={"/", "toCarousel"})
-	    public String toHome(){
+	    public String toCarousel(){
 	    	return "carousel";
 	    }
 	/**
@@ -60,4 +60,13 @@ public class BmCarouselController {
 		return bmCarouselList;
 	}
 	
+	
+	/**
+	 * 新增轮转图信息
+	 * */
+	@RequestMapping(value="saveCarouselInfo")
+	@ResponseBody
+	public void saveCarouselInfo(@RequestBody(required = true) BmCarousel param) throws LunaException{
+			bmCarouselMapper.insert(param);
+	}
 }
