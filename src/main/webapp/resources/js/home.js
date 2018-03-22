@@ -25,7 +25,7 @@ $(function(){
    * 商品类型
    * */
   function typeFormatter(vaule,row,index){
-  	var result=row.productType;
+  	var result=row.productTypeid;
   	if(result=="0"){
   		result="威士忌";
   	}else if(result=="1"){
@@ -45,10 +45,11 @@ $(function(){
    * 图片路径截取
    * */
   function pictureFormatter(value,row,index){
-	  var key="barManager/";
+	  var key="barManager";
 	  var str=value+'';
-	  console.log(str);
+	  console.log(row);
 	  var index=value.indexOf(key);
+	  console.log(index);
 	  var result=value.substr(index+11,value.length);
 	  console.log(result);
 	  var html='<img src="'+result+'"width="100" height="100">';
@@ -56,28 +57,13 @@ $(function(){
   }
   
   function subPicturePath(value){
-	  var key="barManager/";
+	  var key="barManager";
 	  var str=value+'';
 	  console.log(str);
 	  var index=value.indexOf(key);
 	  var result=value.substr(index+11,value.length);
 	  console.log(result); 
 	  return result;
-  }
-/*------------------------------------------------------------------------------------------------*/   
-
-/**
-* select选择框onclick点击事件
-*/
-  function changeCoefficeient1(){
-  	if($('#isProbation1').val()=="0"){
-  	$('#coefficeient1').val("1.0");
-  	}else if($('#isProbation1').val()=="1"){
-  		$('#coefficeient1').val("0.8");
-  	}else if($('#coefficeient2').val()=="2"){
-  		$('#coefficeient1').val("请输入自定义系数");
-  	}
-  	
   }
   
 /*------------------------------------------------------------------------------------------------*/   
@@ -100,13 +86,13 @@ $(function(){
 	}
 	/* 修改任务模态框 */
 	function config(row) {
-		$('#productId2').val(row.productId);
+		$('#productId2').val(row.id);
 		$('#productPicture2').attr('src',subPicturePath(row.productPicture));
 		$('#productPicture2').val(row.productPicture);
 		$('#productName2').val(row.productName);
 		$('#productPrice2').val(row.productPrice);
 		$('#productCount2').val(row.productCount);
-		$('#productType2').selectpicker('val',row.productType);
+		$('#productTypeid2').selectpicker('val',row.productTypeid);
 		$('#productDescribe2').val(row.productDescribe);
 		
 		$("#editModal").modal('show');

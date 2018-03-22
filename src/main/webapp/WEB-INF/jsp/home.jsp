@@ -110,12 +110,12 @@
                 <thead>
                 <tr>
                     <!-- <th data-field="state" data-checkbox="true"></th> -->
-                    <th data-field="productId" data-align="center" >商品编号</th>
+                    <th data-field="id" data-align="center" >商品编号</th>
                     <th data-field="productPicture" data-align="center" data-formatter="pictureFormatter">商品图片</th>
                     <th data-field="productName" data-align="center">商品名称</th>
                     <th data-field="productPrice" data-align="center" >商品价格(／瓶)</th>
                     <th data-field="productCount" data-align="center">商品数量(／瓶)</th>
-                    <th data-field="productType" data-align="center" data-formatter="typeFormatter">商品归属类</th>
+                    <th data-field="productTypeid" data-align="center" data-formatter="typeFormatter">商品归属类</th>
                     <th data-field="productDescribe" data-align="center">商品描述</th>
                     <th data-field="" data-formatter="operationFormatter">修改商品信息</th>
                 </tr>
@@ -194,6 +194,12 @@
                     </div>
                   </div>
                   
+                  <div class="form-group">
+                    <label for="productDescribe1" class="col-sm-3 control-label">商品描述</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="productDescribe1" placeholder="">         
+                    </div> 
+                  </div>
                  
           <div class="modal-footer">
           <div class="col-sm-8">
@@ -217,14 +223,25 @@
           </div>
           <div class="modal-body">
               <form  class="form-horizontal" role="form" method="post">
-                  
-                  <div class="form-group">
+				
+				
+				<div class="form-group">
                     <label for="productId2" class="col-sm-3 control-label">商品编号</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="productId2" placeholder="">
+                      <input type="text" class="form-control" id="productId2" placeholder="" disabled>
                     </div>
+                   
                   </div>
-                
+				
+				
+				<div class="form-group">
+                    <label for="productName2" class="col-sm-3 control-label">商品名称</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="productName2" placeholder="">
+                    </div>
+                   
+                  </div>
+
                   <div class="form-group">
                     <label for="productPicture2" class="col-sm-3 control-label">商品图片</label>
                     <div class="col-sm-8">
@@ -232,15 +249,7 @@
                            <input type="file" class="file" id="productPicture3" multiple> 
                     </div>                  
                   </div>
-                  
-                
-                  <div class="form-group">
-                    <label for="productName2" class="col-sm-3 control-label">商品名称</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="productName2" placeholder="">
-                    </div>
-                   
-                  </div>
+
                   
                   <hr>
                   
@@ -263,16 +272,22 @@
                     <div class="col-sm-8">
                       <select class="selectpicker form-control" id="productType2">
                       	<option value=""></option>
-                      	<option value="0">威士忌</option>
-                      	<option value="1">伏特加</option>
-                      	<option value="2">力娇酒</option>
-                      	<option value="3">龙舌兰</option>
-                      	<option value="4">啤酒</option>
-                      	<option value="5">红酒</option>
+                      	<option value="1">啤酒</option>
+                      	<option value="2">洋酒</option>
+                      	<option value="3">鸡尾酒</option>
+                      	<option value="4">酒桶</option>
+                      	<option value="5">软饮</option>
+                      	<option value="6">小吃</option>
                       </select>
                     </div>
                   </div>
                   
+                   <div class="form-group">
+                    <label for="productDescribe2" class="col-sm-3 control-label">商品描述</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="productDescribe2" placeholder="">         
+                    </div> 
+                  </div>
                   <hr>
                   
          <div class="form-group">
@@ -319,13 +334,7 @@
                 	  * @author chenyang
                 	  * */
                 	  function saveProductInfo(){  
-                		  /* var content = UE.getEditor('productDescribe1')
-                           .getContent()
-                           .replace(/\[b\]([^\[]*?)\[\/b\]/igm, '<b>$1</b>')
-                           .replace(/\[i\]([^\[]*?)\[\/i\]/igm, '<i>$1</i>')
-                           .replace(/\[u\]([^\[]*?)\[\/u\]/igm, '<u>$1</u>')
-                           .replace(/\[url=([^\]]*)\]([^\[]*?)\[\/url\]/igm, '<a href="$1">$2</a>')
-                           .replace(/\[img\]([^\[]*?)\[\/img\]/igm, '<img src="$1" />'); */
+                		
                 	      var param = {
                 	      		productName:$('#productName1').val(),
                 	      		productTypeid:$('#productTypeid1').val(),
@@ -372,39 +381,33 @@
                 	        $("#productPicture3").on("fileuploaded",function(event,data,previewId,index){
                 	       	 		console.log(data);
                 	       	 		picture1=data.response.picturepath;
-                	       	 		console.log(picture);
+                	       	 		console.log(picture1);
                 	        });
                 	   	 
                 	        /**
                 	         * 修改商品信息
                 	         * */
                 	      	function alterProductInfo(){
-                	      		var changeContent = UE.getEditor('productDescribe2')
-                                .getContent()
-                                .replace(/\[b\]([^\[]*?)\[\/b\]/igm, '<b>$1</b>')
-                                .replace(/\[i\]([^\[]*?)\[\/i\]/igm, '<i>$1</i>')
-                                .replace(/\[u\]([^\[]*?)\[\/u\]/igm, '<u>$1</u>')
-                                .replace(/\[url=([^\]]*)\]([^\[]*?)\[\/url\]/igm, '<a href="$1">$2</a>')
-                                .replace(/\[img\]([^\[]*?)\[\/img\]/igm, '<img src="$1" />');
+                	    
                 	        		if(picture1==null){
                 	      		var param={
-                	      			productId:$('#productId2').val(),
+                	      			id:$('#productId2').val(),
                 	      			productPicture:$('#productPicture2').val(),
                 	      			productName:$('#productName2').val(),
                 	      			productPrice:$('#productPrice2').val(),
                 	      			productCount:$('#productCount2').val(),
-                	      			productType:$('#productType2').val(),
-                	      			productDescribe:changeContent
+                	      			productTypeid:$('#productTypeid2').val(),
+                	      			productDescribe:$('#productDescribe2').val()
                 	      		}
                 	        		}else{
                 	        			var param={
-                            	      			productId:$('#productId2').val(),
+                	        					id:$('#productId2').val(),
                             	      			productPicture:picture1,
                             	      			productName:$('#productName2').val(),
                             	      			productPrice:$('#productPrice2').val(),
                             	      			productCount:$('#productCount2').val(),
-                            	      			productType:$('#productType2').val(),
-                            	      			productDescribe:changeContent
+                            	      			productTypeid:$('#productTypeid2').val(),
+                            	      			productDescribe:$('#productDescribe2').val()
                             	      		}
                 	        		}
                 	      		$.ajax({
